@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "parser.h"
+#include "functions.h"
 #include "evaluator.h"
 
 // Evaluate the AST
@@ -24,44 +25,21 @@ double evaluate_ast(Node* node, SymbolTable* symbol_table)
             return symbol_table_get(symbol_table, node->value);
 
         case NODE_FUNCTION:
-            if (strcmp(node->value, "sin") == 0)
-            {
-                if (node->arg_count != 1) {
-                    fprintf(stderr, "Error: Function 'sin' expects 1 argument\n");
-                    exit(EXIT_FAILURE);
-                }
-
-                return sin(evaluate_ast(node->args[0], symbol_table));
-            }
-
-            else if (strcmp(node->value, "cos") == 0)
-            {
-                if (node->arg_count != 1) {
-                    fprintf(stderr, "Error: Function 'cos' expects 1 argument\n");
-                    exit(EXIT_FAILURE);
-                }
-
-                return cos(evaluate_ast(node->args[0], symbol_table));
-            }
-
-            else if (strcmp(node->value, "sqrt") == 0)
-            {
-                if (node->arg_count != 1)
-                {
-                    fprintf(stderr, "Error: Function 'sqrt' expects 1 argument\n");
-                    exit(EXIT_FAILURE);
-                }
-
-                return sqrt(evaluate_ast(node->args[0], symbol_table));
-            }
-
-            else
-            {
-                fprintf(stderr, "Error: Unknown function '%s'\n", node->value);
-                exit(EXIT_FAILURE);
-            }
+            return evaluate_function(node, symbol_table);
 
         case NODE_OPERATOR:
+            if (strcmp(node->value, "=") == 0)
+            {
+                if (node->left->type != NODE_VARIABLE)
+                {
+                    fprintf(stderr, "Error: Left-hand side of '=' must be a variable\n");
+                    exit(EXIT_FAILURE);
+                }
+
+                double value = evaluate_ast(node->right, symbol_table);
+                symbol_table_add(symbol_table, node->left->value, value, node->right);
+                return value;
+            }
             if (strcmp(node->value, "+") == 0)
             {
                 return evaluate_ast(node->left, symbol_table) + evaluate_ast(node->right, symbol_table);

@@ -151,6 +151,15 @@ Node* parse_binary(Lexer* lexer, int precedence)
         }
 
         Node* operator = node_new(NODE_OPERATOR, token->value);
+
+        if (strcmp(token->value, "=") == 0) 
+        {
+            operator->left = left;
+            operator->right = parse_expression(lexer); // Assignment binds tightly
+            token_free(token);
+            return operator;
+        }
+
         Node* right;
 
         if (strcmp(token->value, "^") == 0) 

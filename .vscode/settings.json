@@ -3,6 +3,10 @@
         "token.h": "c",
         "stdlib.h": "c",
         "lexer.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "type_traits": "c",
+        "symbol_table.h": "c",
+        "stdio.h": "c",
+        "parser.h": "c"
     }
 }

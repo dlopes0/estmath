@@ -6,7 +6,7 @@
 #include "evaluator.h"
 #include "symbol_table.h"
 
-void eval(char* input, SymbolTable* symbol_table)
+void eval_test(char* input, SymbolTable* symbol_table)
 {
     Lexer* lexer = lexer_new(input);
     Node* ast = parse(lexer);
@@ -16,7 +16,7 @@ void eval(char* input, SymbolTable* symbol_table)
     print_ast(ast, 0);
 
     double result = evaluate_ast(ast, symbol_table);
-    printf("Result: %f\n", result);
+    printf("Result: %.10f\n", result);
 
     free_ast(ast);
     lexer_free(lexer);
@@ -26,7 +26,9 @@ int main()
 {
     SymbolTable* symbol_table = symbol_table_create();
 
-    symbol_table_add(symbol_table, "x", 5);
+    symbol_table_add(symbol_table, "x", 5, NULL);
+    symbol_table_add(symbol_table, "m", 300, NULL);
+    symbol_table_add(symbol_table, "v", 1, NULL);
 
     char* inputs[] = {
         "2^3^2",
@@ -55,14 +57,20 @@ int main()
         "2 * x",
         "sin(pi/2)",
         "cos(0)",
-        "sqrt(x)"
+        "sqrt(x)",
+        "1E+3*4+5",
+        "F=0.5*m*v^2",
+        "F",
+        "abs(-F)+4",
+        "integral(0,1,x^2,x)",
+        "integral(0,1,sin(x),x)"
     };
  
     int num_inputs = sizeof(inputs) / sizeof(inputs[0]);
 
     for (int i = 0; i < num_inputs; i++) 
     {
-        eval(inputs[i], symbol_table);
+        eval_test(inputs[i], symbol_table);
     }
 
     symbol_table_free(symbol_table);

@@ -69,6 +69,29 @@ Token* lexer_next_token(Lexer* lexer)
             }
         }
 
+        if (lexer->pos < strlen(lexer->input) && (lexer->input[lexer->pos] == 'e' || lexer->input[lexer->pos] == 'E'))
+        {
+            lexer->pos++; // Consume 'e' or 'E'
+
+            // Check for optional '+' or '-' sign
+            if (lexer->pos < strlen(lexer->input) && (lexer->input[lexer->pos] == '+' || lexer->input[lexer->pos] == '-'))
+            {
+                lexer->pos++;
+            }
+
+            // Expect digits for the exponent
+            if (lexer->pos >= strlen(lexer->input) || !isdigit(lexer->input[lexer->pos]))
+            {
+                fprintf(stderr, "Error: Invalid number format in scientific notation\n");
+                exit(EXIT_FAILURE);
+            }
+
+            while (lexer->pos < strlen(lexer->input) && isdigit(lexer->input[lexer->pos]))
+            {
+                lexer->pos++;
+            }
+        }
+
         Token* token = malloc(sizeof(Token));
         token->type = TOKEN_NUMBER;
         token->value = strndup(lexer->input + start, lexer->pos - start);
@@ -102,7 +125,7 @@ Token* lexer_next_token(Lexer* lexer)
     }
 
     // Check for operators
-    if (strchr("+-*/^", lexer->input[lexer->pos])) 
+    if (strchr("+-*/^=", lexer->input[lexer->pos])) 
     {
         Token* token = malloc(sizeof(Token));
         token->type = TOKEN_OPERATOR;
@@ -120,7 +143,7 @@ Token* lexer_next_token(Lexer* lexer)
         token->type = type;
         token->value = strndup(&lexer->input[lexer->pos], 1);
         lexer->pos++;
-        
+
         return token;
     }
 
