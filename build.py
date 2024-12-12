@@ -3,10 +3,15 @@ import os
 import glob
 import shutil
 
+EXEC_FORMAT   = ""
+
 BUILD_TYPE    = None
 COMPILER      = None
 OPTIONS       = None
 COMPILE_TESTS = None
+
+if sys.platform.startswith('win32'):
+    EXEC_FORMAT = ".exe"
 
 if (len(sys.argv) == 2):
     print("estmath build.py v1.0")
@@ -68,7 +73,6 @@ if (len(sys.argv) == 2):
     print("     " + static_lib_command)
     os.system(static_lib_command)
     
-
     # Compile tests
     if (COMPILE_TESTS):
         print("[IN] Compiling test programs...")
@@ -80,7 +84,7 @@ if (len(sys.argv) == 2):
         for f in glob.glob("tests/*.c"):
             f_name = os.path.basename(f)
             f_base = f_name[:f_name.rindex('.')]
-            compile_tests_command = COMPILER + " -o build/" + f_base + ".exe"
+            compile_tests_command = COMPILER + " -o build/" + f_base + EXEC_FORMAT
             for g in glob.glob("build/*.o"):
                 g_name = os.path.basename(g)
                 g_base = g_name[:g_name.rindex('.')]
