@@ -2,9 +2,12 @@
 
 #include "lexer.h"
 #include "parser.h"
+#include "settings.h"
 
 int main() 
 {
+    mode_debug = 1;
+
     char* input = "INT(0,1,x^2,x)";
 
     Lexer* lexer = lexer_new(input);

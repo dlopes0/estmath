@@ -7,6 +7,7 @@
 #include "evaluator.h"
 #include "settings.h"
 #include "custom_math.h"
+#include "return_code.h"
 #include "functions.h"
 
 #define PI 3.14159265358979323846
@@ -20,8 +21,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'sin' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'sin' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -43,8 +51,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'cos' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'cos' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -66,8 +81,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'tan' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'tan' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -89,8 +111,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'asin' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'asin' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -112,8 +141,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'acos' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'acos' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -135,8 +171,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'atan' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'atan' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         if (mode_angle == MODE_ANGLE_DEG)
@@ -158,8 +201,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'sinh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'sinh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return sinh(evaluate_ast(node->args[0], symbol_table));
@@ -170,8 +220,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'cosh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'cosh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return cosh(evaluate_ast(node->args[0], symbol_table));
@@ -182,8 +239,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'tanh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'tanh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return tanh(evaluate_ast(node->args[0], symbol_table));
@@ -194,8 +258,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'asinh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'asinh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return asinh(evaluate_ast(node->args[0], symbol_table));
@@ -206,8 +277,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'acosh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'acosh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
 
@@ -219,8 +297,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1) 
         {
-            fprintf(stderr, "Error: Function 'atanh' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'atanh' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return atanh(evaluate_ast(node->args[0], symbol_table));
@@ -231,8 +316,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 2) 
         {
-            fprintf(stderr, "Error: Function 'hypot' expects 2 arguments\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'hypot' expects 2 arguments\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return hypot(evaluate_ast(node->args[0], symbol_table),evaluate_ast(node->args[1], symbol_table));
@@ -245,8 +337,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 2)
         {
-            fprintf(stderr, "Error: Function 'pow' expects 2 arguments\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'pow' expects 2 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return pow(evaluate_ast(node->args[0], symbol_table),evaluate_ast(node->args[1], symbol_table));
@@ -257,8 +356,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'exp' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'exp' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return exp(evaluate_ast(node->args[0], symbol_table));
@@ -269,8 +375,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'sqrt' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'sqrt' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return sqrt(evaluate_ast(node->args[0], symbol_table));
@@ -281,8 +394,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'cbrt' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'cbrt' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return cbrt(evaluate_ast(node->args[0], symbol_table));
@@ -295,8 +415,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'log' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'log' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return log(evaluate_ast(node->args[0], symbol_table));
@@ -307,8 +434,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'log10' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'log10' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return log10(evaluate_ast(node->args[0], symbol_table));
@@ -319,8 +453,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'log2' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'log2' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return log2(evaluate_ast(node->args[0], symbol_table));
@@ -333,8 +474,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 2)
         {
-            fprintf(stderr, "Error: Function 'atan2' expects 2 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'atan2' expects 2 arguments\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return atan2(evaluate_ast(node->args[1], symbol_table),evaluate_ast(node->args[0], symbol_table));
@@ -351,8 +499,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 1)
         {
-            fprintf(stderr, "Error: Function 'abs' expects 1 argument\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'abs' expects 1 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
 
         return abs(evaluate_ast(node->args[0], symbol_table));
@@ -365,8 +520,15 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
     {
         if (node->arg_count != 4)
         {
-            fprintf(stderr, "Error: Function 'integral' expects 4 arguments\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Function 'integral' expects 4 argument\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_MISSING_ARGS_ERROR);
+            
+            return 0;
         }
         
         return integral(evaluate_ast(node->args[0], symbol_table),evaluate_ast(node->args[1], symbol_table),node->args[2],node->args[3]);
@@ -374,7 +536,14 @@ double evaluate_function(Node* node, SymbolTable* symbol_table)
 
     else
     {
-        fprintf(stderr, "Error: Unknown function '%s'\n", node->value);
-        exit(EXIT_FAILURE);
+        if (mode_debug)
+        {
+            fprintf(stderr, "Error: Unknown function '%s'\n", node->value);
+            exit(EXIT_FAILURE);
+        }
+
+        return_code_set(RETURN_CODE_UNKNOWN_FUNC_ERROR);
+            
+        return 0;
     }
 }

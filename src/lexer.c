@@ -4,6 +4,8 @@
 #include <ctype.h>
 
 #include "token.h"
+#include "settings.h"
+#include "return_code.h"
 #include "lexer.h"
 
 char *strndup(const char *s, size_t n) 
@@ -13,11 +15,15 @@ char *strndup(const char *s, size_t n)
 
     for (n1 = 0; n1 < n && s[n1] != '\0'; n1++)
         continue;
+
     p = malloc(n + 1);
-    if (p != NULL) {
+
+    if (p != NULL) 
+    {
         memcpy(p, s, n1);
         p[n1] = '\0';
     }
+
     return p;
 }
 
@@ -82,8 +88,15 @@ Token* lexer_next_token(Lexer* lexer)
             // Expect digits for the exponent
             if (lexer->pos >= strlen(lexer->input) || !isdigit(lexer->input[lexer->pos]))
             {
-                fprintf(stderr, "Error: Invalid number format in scientific notation\n");
-                exit(EXIT_FAILURE);
+                if (mode_debug)
+                {
+                        fprintf(stderr, "Error: Invalid number format in scientific notation\n");
+                        exit(EXIT_FAILURE);
+                }
+
+                return_code_set(RETURN_CODE_SCI_NOTATION_ERROR);
+                
+                return NULL;
             }
 
             while (lexer->pos < strlen(lexer->input) && isdigit(lexer->input[lexer->pos]))
@@ -95,6 +108,7 @@ Token* lexer_next_token(Lexer* lexer)
         Token* token = malloc(sizeof(Token));
         token->type = TOKEN_NUMBER;
         token->value = strndup(lexer->input + start, lexer->pos - start);
+
         return token;
     }
 
@@ -131,6 +145,7 @@ Token* lexer_next_token(Lexer* lexer)
         token->type = TOKEN_OPERATOR;
         token->value = strndup(&lexer->input[lexer->pos], 1);
         lexer->pos++;
+
         return token;
     }
 
@@ -148,8 +163,15 @@ Token* lexer_next_token(Lexer* lexer)
     }
 
     // Unknown character
-    fprintf(stderr, "Error: Unknown character '%c'\n", lexer->input[lexer->pos]);
-    exit(EXIT_FAILURE);
+    if (mode_debug)
+    {
+        fprintf(stderr, "Error: Unknown character '%c'\n", lexer->input[lexer->pos]);
+        exit(EXIT_FAILURE);
+    }
+
+    return_code_set(RETURN_CODE_SYNTAX_ERROR);
+                
+    return NULL;
 }
 
 // Free the token

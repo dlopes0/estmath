@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "return_code.h"
+#include "settings.h"
 #include "evaluator.h"
 #include "symbol_table.h"
 
@@ -64,8 +66,15 @@ double symbol_table_get(SymbolTable* table, const char* name)
         }
     }
 
-    fprintf(stderr, "Error: Variable '%s' not defined\n", name);
-    exit(EXIT_FAILURE);
+    if (mode_debug)
+    {
+        fprintf(stderr, "Error: Variable '%s' not defined\n", name);
+        exit(EXIT_FAILURE);
+    }
+
+    return_code_set(RETURN_CODE_UNKNOWN_VARS_ERROR);
+
+    return 0;
 }
 
 void symbol_table_free(SymbolTable* table) 

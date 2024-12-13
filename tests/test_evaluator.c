@@ -5,6 +5,7 @@
 #include "parser.h"
 #include "evaluator.h"
 #include "symbol_table.h"
+#include "settings.h"
 
 void eval_test(char* input, SymbolTable* symbol_table)
 {
@@ -24,6 +25,8 @@ void eval_test(char* input, SymbolTable* symbol_table)
 
 int main() 
 {
+    mode_debug = 1;
+
     SymbolTable* symbol_table = symbol_table_create();
 
     symbol_table_add(symbol_table, "x", 5, NULL);

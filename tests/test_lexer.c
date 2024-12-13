@@ -1,10 +1,14 @@
 #include <stdio.h>
 
 #include "lexer.h"
+#include "settings.h"
 
 int main() 
 {
+    mode_debug = 1;
+
     char input[] = "func()+47";
+    
     Lexer* lexer = lexer_new(input);
     Token* token;
 

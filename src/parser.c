@@ -4,12 +4,16 @@
 
 #include "token.h"
 #include "lexer.h"
+#include "settings.h"
+#include "return_code.h"
 #include "parser.h"
 
 char* strdup(const char* s)
 {
     size_t size = strlen(s) + 1;
+
     char* p = malloc(size);
+
     if (p != NULL) 
     {
         memcpy(p, s, size);
@@ -22,6 +26,7 @@ char* strdup(const char* s)
 Node* node_new(NodeType type, char* value)
 {
     Node* node = malloc(sizeof(Node));
+    
     node->type = type;
     node->value = strdup(value);
     node->left = NULL;
@@ -69,9 +74,17 @@ Node* parse_primary(Lexer* lexer)
 
             // Expect '(' after the function name
             Token* lparen = lexer_next_token(lexer);
-            if (lparen->type != TOKEN_LPAREN) {
-                fprintf(stderr, "Error: Expected '(' after function name\n");
-                exit(EXIT_FAILURE);
+            if (lparen->type != TOKEN_LPAREN) 
+            {
+                if (mode_debug)
+                {
+                    fprintf(stderr, "Error: Expected '(' after function name\n");
+                    exit(EXIT_FAILURE);
+                }
+
+                return_code_set(RETURN_CODE_SYNTAX_ERROR);
+
+                break;
             }
             token_free(lparen);
 
@@ -96,8 +109,15 @@ Node* parse_primary(Lexer* lexer)
                 } 
                 else 
                 {
-                    fprintf(stderr, "Error: Expected ',' or ')'\n");
-                    exit(EXIT_FAILURE);
+                    if (mode_debug)
+                    {
+                        fprintf(stderr, "Error: Expected ',' or ')'\n");
+                        exit(EXIT_FAILURE);
+                    }
+
+                    return_code_set(RETURN_CODE_SYNTAX_ERROR);
+
+                    break;
                 }
             }
 
@@ -109,16 +129,31 @@ Node* parse_primary(Lexer* lexer)
 
             if (rparen->type != TOKEN_RPAREN)
             {
-                fprintf(stderr, "Error: Expected closing parenthesis\n");
-                exit(EXIT_FAILURE);
+                if (mode_debug)
+                {
+                    fprintf(stderr, "Error: Expected closing parenthesis\n");
+                    exit(EXIT_FAILURE);
+                }
+
+                return_code_set(RETURN_CODE_SYNTAX_ERROR);
+
+                break;
             }
 
             token_free(rparen);
 
             break;
         default:
-            fprintf(stderr, "Error: Unexpected token in parse_primary\n");
-            exit(EXIT_FAILURE);
+            if (mode_debug)
+            {
+                fprintf(stderr, "Error: Unexpected token in parse_primary\n");
+                exit(EXIT_FAILURE);
+            }
+
+            return_code_set(RETURN_CODE_SYNTAX_ERROR);
+
+            break;
+            
     }
 
     token_free(token);
@@ -157,6 +192,7 @@ Node* parse_binary(Lexer* lexer, int precedence)
             operator->left = left;
             operator->right = parse_expression(lexer); // Assignment binds tightly
             token_free(token);
+
             return operator;
         }
 
