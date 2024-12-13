@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 #include "lexer.h"
@@ -58,7 +59,24 @@ int main()
     {
         printf(">> ");
         scanf("%s", input);
-        eval_test(input, symbol_table);
+
+        if (!strcmp(input,"exit"))
+        {
+            symbol_table_free(symbol_table);
+            exit(EXIT_SUCCESS);
+        }
+        else if (!strcmp(input,"about"))
+        {
+            printf("estmath test_cli v1.0\n");
+            printf(" (C) David Lopes, 2024\n");
+            printf("\n");
+            printf(" Version History\n");
+            printf("  [v1.0] First version (2024-12-13)\n");
+        }
+        else
+        {
+            eval_test(input, symbol_table);
+        }        
     }
 
     symbol_table_free(symbol_table);
