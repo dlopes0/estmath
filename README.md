@@ -6,6 +6,9 @@ Math library for developing electronic calculators made in ESTSetúbal/IPS @ DEE
 - Builtin and user variables support
 - Builtin functions (implemented from C99 math.h or custom_math.h)
 
+## Architecture block diagram
+![Block Diagram](./docs/estmath_block_diagram.png)
+
 ## Building
 ### Requirements
 - gcc
