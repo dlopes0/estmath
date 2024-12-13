@@ -20,27 +20,29 @@ void eval_test(char* input, SymbolTable* symbol_table)
             printf(" %.10f\n", result);
             break;
         case RETURN_CODE_SYNTAX_ERROR:
-            printf(" ? Syntax Error");
+            printf(" ? Syntax Error\n");
             break;
         case RETURN_CODE_DIV_ZERO_ERROR:
-            printf(" ? Cannot divide by zero");
+            printf(" ? Cannot divide by zero\n");
             break;
         case RETURN_CODE_MISSING_ARGS_ERROR:
-            printf(" ? Missing arguments");
+            printf(" ? Missing arguments\n");
             break;
         case RETURN_CODE_UNKNOWN_FUNC_ERROR:
-            printf(" ? Unknown function");
+            printf(" ? Unknown function\n");
             break;
         case RETURN_CODE_SCI_NOTATION_ERROR:
-            printf(" ? Scientific notation error");
+            printf(" ? Scientific notation error\n");
             break;
         case RETURN_CODE_UNKNOWN_VARS_ERROR:
-            printf(" ? Unknown function");
+            printf(" ? Unknown function\n");
             break;
         default:
-            printf(" ? Some error occurred");
+            printf(" ? Some error occurred\n");
             break;
     }
+
+    symbol_table_add(symbol_table, "ans", result, NULL);
 
     free_ast(ast);
     lexer_free(lexer);
@@ -54,7 +56,8 @@ int main()
  
     while(1)
     {
-        scanf(">> %s\n", input);
+        printf(">> ");
+        scanf("%s", input);
         eval_test(input, symbol_table);
     }
 

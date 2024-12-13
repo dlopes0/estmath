@@ -13,7 +13,7 @@
 #define RETURN_CODE_SCI_NOTATION_ERROR 0x06  // RETURN CODE: Scientific Notation Error
 #define RETURN_CODE_UNKNOWN_VARS_ERROR 0x07  // RETURN CODE: Unknown Variable Error
 
-char RETURN_CODE = 0x00;
+extern char RETURN_CODE;
 
 void return_code_set(char code);
 

@@ -8,7 +8,7 @@
 #define MODE_ANGLE_DEG 0x01
 #define MODE_ANGLE_GRA 0x02
 
-char mode_angle = MODE_ANGLE_RAD;
-char mode_debug = 0;
+extern char mode_angle;
+extern char mode_debug;
 
 #endif

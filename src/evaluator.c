@@ -12,6 +12,8 @@
 // Evaluate the AST
 double evaluate_ast(Node* node, SymbolTable* symbol_table)
 {
+    return_code_set(RETURN_CODE_EVAL_OK);
+
     if (node == NULL) 
     {
         if (mode_debug)
