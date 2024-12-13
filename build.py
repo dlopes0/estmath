@@ -5,13 +5,17 @@ import shutil
 
 EXEC_FORMAT   = ""
 
-BUILD_TYPE    = None
-COMPILER      = None
-OPTIONS       = None
-COMPILE_TESTS = None
+BUILD_TYPE    = ""
+COMPILER      = ""
+OPTIONS       = ""
+COMPILE_TESTS = ""
 
 if sys.platform.startswith('win32'):
     EXEC_FORMAT = ".exe"
+
+if sys.platform.startswith('linux') or sys.platform.startswith('darwin') or sys.platform.startswith('freebsd') or sys.platform.startswith('openbsd'):
+    OPTIONS = " -lm"
+    
 
 if (len(sys.argv) == 2):
     print("estmath build.py v1.0")
@@ -40,12 +44,12 @@ if (len(sys.argv) == 2):
     print("[IN] Defining global variables...")
     BUILD_TYPE = sys.argv[1]
     if (BUILD_TYPE == "system"):
-        COMPILER      = "gcc"
-        OPTIONS       = ""
+        COMPILER      += "gcc"
+        OPTIONS       += ""
         COMPILE_TESTS = True
     elif (BUILD_TYPE == "avr-atmega328p"):
-        COMPILER      = "avr-gcc"
-        OPTIONS       = " -mmcu=atmega328p"
+        COMPILER      += "avr-gcc"
+        OPTIONS       += " -mmcu=atmega328p"
         COMPILE_TESTS = False
     else:
         print("[!!] Please select a supported build type...")
